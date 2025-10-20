@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm run tw\" \"npm run bs\"",
+    "tw": "tailwindcss -i ./src/index.css -o ./build/index.css --watch --minify",
+    "bs": "browser-sync start --proxy 'http://localhost:8888/gustav-portfolio/wp-admin/customize.php?theme=portfolio-start&return=http%3A%2F%2Flocalhost%3A8888%2Fgustav-portfolio%2Fwp-admin%2Fthemes.php%3Ftheme%3Dportfolio-start' --files 'assets-build/*.css, **/*.php'"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "browser-sync": "^3.0.4",
+    "concurrently": "^9.2.1",
+    "tailwindcss": "^4.0.6",
+    "@tailwindcss/cli": "^4.0.6"
+  }
+}

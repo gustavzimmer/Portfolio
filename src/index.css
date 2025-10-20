@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+    --color-bg: #1C1917;
+    --color-text: #F5F3E7;
+    --color-first-layer: #0A0A0A;
+    --color-middle-layer: #161513;
+    --color-back-layer: #26231F;
+}
