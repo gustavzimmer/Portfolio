@@ -1,0 +1,93 @@
+/* Kontakt section */
+
+  /* 
+    
+  */
+  .kontaktLinks{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1rem, 3vw, 2.25rem);
+    transform: translateX(200%);
+    opacity: 0;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  }
+
+  .kontaktLinksHeader{
+    font-size: clamp(0.8rem, 3vw, 1.5rem);
+    color: #d9d9d9;
+    opacity: 0.8;
+  }
+  /* Form */
+  .wpcf7-form{
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  .wpcf7-form-control:focus{
+    outline: none;
+  }
+
+  .wpcf7-form-control {
+    border-bottom: 1px solid #F5F3E790;
+  }
+
+  .wpcf7-submit{
+    border: none;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .wpcf7-submit:hover{
+    cursor: pointer;
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-wrapper .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  .input-wrapper input,textarea {
+    width: 100%;
+    padding-left: 3.5rem;
+    height: 2.5rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+  }
+
+  .input-wrapper textarea {
+    height: 6rem;
+    padding-top: 1rem;
+  }
+
+  svg.textarea-icon.icon{
+    top: 1.8rem;
+  }
+
+  .wpcf7-not-valid-tip{
+    position: absolute;
+    bottom: -1.5rem;
+    left: 3.5rem;
+  }
+  .wpcf7-form-control-wrap[data-name="your-message"] .wpcf7-not-valid-tip{
+    bottom: 0;
+  }
+
+  .wpcf7-response-output{
+    border: none !important;
+    position: absolute;
+    bottom: -4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .kontaktLinks{
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }

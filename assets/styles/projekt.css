@@ -1,0 +1,26 @@
+ /* Projekt Section */
+
+  .projektCardTitle{
+    font-size: 1rem;
+  }
+
+  .projektCardText{
+    font-size: 0.875rem;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .projektImgContainer:hover {
+    cursor: pointer;
+  }
+
+  .projektImgContainer img{
+    transition: all 0.5s ease-in-out;
+  }
+
+  .projektImgContainer:hover + div .projektCardText{
+    opacity: 1;
+  }
+
+  .projektImgContainer:hover img{
+    opacity: 0.5;
+  }

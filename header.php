@@ -8,11 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <?php wp_head() ?>
 </head>
-<body <?php body_class("bg-bg text-text h-[100svh] min-h-[654px]"); ?> >
+<body <?php body_class("bg-bg text-text h-[100dvh] min-h-[580px]"); ?> >
 <?php wp_body_open(); ?>
 
-<header class="flex flex-row-reverse justify-between contain  pt-[2rem]">
-    <div class=" moon-wrapper">
+
+<header id="preload" class="flex items-center contain py-[2rem] h-[150px] mx-auto">
+    <div class="moon-wrapper">
         <svg class="moon" width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="75" cy="75" r="75" fill="url(#paint0_radial_16_3263)" />
             <defs>
