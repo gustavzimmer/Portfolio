@@ -17,6 +17,14 @@
   transform: none;
 }
 
+:root.loaded div.moon-wrapper.projektPageMoon{
+  top: -30vh;
+}
+
+:root.loaded.nav-open .moon-wrapper{
+  transform: translateY(-30vh);
+}
+
 .nav-hover-effekt{
   display:inline-block;
   height:1em;
@@ -195,6 +203,23 @@ main {
   100% { background-position: -375px 0 }
 }
 
+.forest-wrapper {
+  position: fixed;
+  bottom: -100%;
+  width: 100%;
+  height: 55vh;
+  pointer-events: none;
+  transform: translateY(0);
+  transition:
+    bottom 1s cubic-bezier(.22,.61,.36,1) 1s,
+    transform 600ms cubic-bezier(.22,.61,.36,1);
+  z-index: 1;
+}
+
+:root.loaded .forest-wrapper {
+  bottom: 0;
+}
+
 .forest-front{
   z-index: 3;
     position: fixed;
@@ -237,27 +262,52 @@ main {
   100% { background-position: -1440px 0; }
 }
 
-.meny{
-    z-index: 5;
+.navSec {
     position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    background-color: #0a0a0a;
-    width: 100%;
-    height: 5rem;
+    left: 0;
     bottom: -100%;
-    transition: bottom 1s cubic-bezier(.22,.61,.36,1) 1s,
-    transform 600ms cubic-bezier(.22,.61,.36,1);
-    ;
+    right: 0;
+    height: calc(30vh + 5rem);
+    background: #0A0A0A;
+    overflow: hidden;
+    z-index: 11;
+    will-change: transform;
+    transform: translate3d(0, 30vh, 0);
+    transition: 
+      bottom 1s cubic-bezier(.22,.61,.36,1) 1s,
+      transform 600ms cubic-bezier(.22,.61,.36,1);
 }
 
-:root.loaded .meny{
+
+:root.loaded .navSec{
   bottom: 0;
+}
+
+:root.loaded.nav-open .navSec{
+  transform: translateY(0) ;
+  transition: transform 600ms cubic-bezier(.22,.61,.36,1);
+}
+
+.meny{
+  position: absolute;
+  left: 0;  right: 0; top: 0;
+  height: 5rem;
+  display: flex;  align-items: center;  justify-content: end;
+  z-index: 2;
 }
 
 .meny #menyBtn {
     animation: floatMeny 5s ease-in-out infinite;
+}
+
+.nav-panel{
+  position: absolute;
+  left: 0;  right: 0; bottom: 0;
+  height: 30vh;
+  backdrop-filter: blur(6px);
+  display: flex;  align-items: end;   padding-bottom: 2rem;
+  z-index: 1;
+  overflow: hidden;
 }
 
 #menyBtn:hover {
@@ -274,39 +324,6 @@ main {
     100% { transform: translateY(0); }
 }
 
-.forest-wrapper {
-    position: fixed;
-    bottom: -100%;
-    width: 100%;
-    height: 55vh;
-    pointer-events: none;
-    transform: translateY(0);
-    transition:
-      bottom 1s cubic-bezier(.22,.61,.36,1) 1s,
-      transform 600ms cubic-bezier(.22,.61,.36,1);
-    z-index: 1;
-  }
-
-  :root.loaded .forest-wrapper {
-    bottom: 0;
-  }
-
-  .nav-panel {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 30vh;
-    background: #0A0A0A;
-    backdrop-filter: blur(6px);
-    transform: translateY(100%);
-    transition: transform 600ms cubic-bezier(.22,.61,.36,1);
-    z-index: 4;
-    display: flex;
-    align-items: end;
-    padding-bottom: 2rem;
-  }
-
   .nav-panel-inner-con{
     width: 100%;
     display: flex;
@@ -316,9 +333,15 @@ main {
   
   .nav-panel .nav {
     display: grid;
+    gap: 1rem;
     color: #F5F5F5;
     transform: translateY(10px);
     transition: transform 400ms ease 200ms;
+  }
+
+  .nav-links{
+    display: grid;
+    gap: .5rem;
   }
 
   .nav-links a {
@@ -331,43 +354,24 @@ main {
 
   .nav-open .meny h3 {
     animation-play-state: paused;
-}
+  }
   
   .nav-open .forest-wrapper {
     transform: translateY(-30vh);
     z-index: 10;
   }
 
-  .nav-open .moon-wrapper{
-    transform: translateY(-30vh);
-  }
-
   .nav-open .forest-back{
     transform: translateY(0);
-    z-index: 1;
-  }
-  .nav-open .forest-middle{
-    z-index: 2;
   }
 
   .nav-open .forest-back, .nav-open .forest-middle, .nav-open .forest-front, .nav-open .bg-stars {
     animation-play-state: paused;
   }
 
-  .nav-open .forest-front{
-    z-index: 10;
-  }
-  .nav-open .meny {
-    transform: translateY(-30vh);
-    z-index: 11;
-  }
-  .nav-open .nav-panel {
-    transform: translateY(0);
-    z-index: 10;
-  }
-  .nav-open .nav-panel .nav {
-    transform: translateY(0);
-  }
+
+
+
   
   .nav-open,
   .nav-open body {
@@ -383,16 +387,10 @@ main {
     .moon-wrapper {
       right: 4rem;
     }
-    .nav-panel {
-      height: 30vh;
-    }
     .nav-open .forest-wrapper {
       transform: translateY(-30vh);
     }
     .nav-open .moon-wrapper{
-      transform: translateY(-30vh);
-    }
-    .nav-open .meny {
       transform: translateY(-30vh);
     }
   }
@@ -410,12 +408,9 @@ main {
         display: none;
     }
 
-    .nav-panel{
-        transform: translateY(0);
-        bottom: -100%;
-        transition: bottom 1s cubic-bezier(.22,.61,.36,1) 1s;
+    .navSec{
         height: 5rem;
-        z-index: 6;
+        transform: translateY(0);
     }
     :root.loaded .nav-panel{
       bottom: 0;

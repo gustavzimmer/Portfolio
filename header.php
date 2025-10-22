@@ -14,7 +14,7 @@
 
 <header id="preload" class="flex items-center contain py-[2rem] h-[150px] mx-auto">
     <div class="moon-wrapper">
-        <svg class="moon" width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="moon" width="100" height="100" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="75" cy="75" r="75" fill="url(#paint0_radial_16_3263)" />
             <defs>
                 <radialGradient id="paint0_radial_16_3263" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"

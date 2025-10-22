@@ -1,7 +1,7 @@
 <?php
     /* Template Name: Om mig */
     get_header()?>
-    <main class="contain h-[50vh] flex items-center justify-center min-h-[340px] mx-auto">
+    <main class="contain h-[30vh] flex justify-center min-h-[340px] mx-auto">
         <section class="text-center flex flex-col items-center ">
             <h2>Om mig</h2>
                 <div class="max-w-[40ch]">
