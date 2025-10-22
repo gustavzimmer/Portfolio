@@ -17,6 +17,83 @@
   transform: none;
 }
 
+.nav-hover-effekt{
+  display:inline-block;
+  height:1em;
+  line-height:1em;
+  overflow:hidden;
+  vertical-align:middle;
+}
+
+.char{
+  position:relative;
+  display:inline-block;
+  height:1em;
+  line-height:1em;
+  overflow:hidden;
+}
+
+.char > .top{
+  position:relative;
+  display:block;
+  transform: translateY(0%);
+  transition: transform 400ms cubic-bezier(.22,.61,.36,1);
+}
+
+.char > .bot{
+  position:absolute;
+  inset:0;
+  display:block;
+  transform: translateY(100%);
+  transition: transform 400ms cubic-bezier(.22,.61,.36,1);
+}
+
+.nav-hover-effekt:hover .char > .top{
+  transform: translateY(-100%);
+}
+.nav-hover-effekt:hover .char > .bot{
+  transform: translateY(0%);
+}
+
+.nav-hover-effekt .char{ margin-right:-0.02em; }
+.nav-hover-effekt .char:last-child{ margin-right:0; }
+
+/* For socials with icons */
+.icon-hover-effekt:hover .char > .top{
+  transform: translateY(-100%);
+}
+.icon-hover-effekt:hover .char > .bot{
+  transform: translateY(0%);
+}
+
+.icon-hover-effekt .char{ margin-right:-0.325em; }
+.icon-hover-effekt .char:first-child{ margin-right:-0.1em; }
+.icon-hover-effekt .char:last-child{ margin-right:0; }
+
+
+/* Squeeze animation */
+.char-span{
+  display: inline-block;
+  transform-origin: center;
+  padding: 0;
+}
+
+.text-hover-effekt:hover .char-span{
+  animation: squeeze 300ms cubic-bezier(.22,.61,.36,1);
+}
+
+@keyframes squeeze {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
 h1, h2, h3 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(3rem, 5vw, 4rem);
@@ -119,7 +196,7 @@ main {
 }
 
 .forest-front{
-    z-index: 11;
+  z-index: 3;
     position: fixed;
     width: 100%;
     height: 250px;
@@ -183,6 +260,10 @@ main {
     animation: floatMeny 5s ease-in-out infinite;
 }
 
+#menyBtn:hover {
+  animation-play-state: paused;
+}
+
 .meny h3:hover {
     cursor: pointer;
 }
@@ -222,9 +303,15 @@ main {
     transition: transform 600ms cubic-bezier(.22,.61,.36,1);
     z-index: 4;
     display: flex;
-    justify-content: space-between;
     align-items: end;
     padding-bottom: 2rem;
+  }
+
+  .nav-panel-inner-con{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
   }
   
   .nav-panel .nav {
@@ -248,6 +335,7 @@ main {
   
   .nav-open .forest-wrapper {
     transform: translateY(-30vh);
+    z-index: 10;
   }
 
   .nav-open .moon-wrapper{
@@ -256,6 +344,10 @@ main {
 
   .nav-open .forest-back{
     transform: translateY(0);
+    z-index: 1;
+  }
+  .nav-open .forest-middle{
+    z-index: 2;
   }
 
   .nav-open .forest-back, .nav-open .forest-middle, .nav-open .forest-front, .nav-open .bg-stars {
@@ -263,7 +355,7 @@ main {
   }
 
   .nav-open .forest-front{
-    z-index: 9;
+    z-index: 10;
   }
   .nav-open .meny {
     transform: translateY(-30vh);
@@ -292,7 +384,7 @@ main {
       right: 4rem;
     }
     .nav-panel {
-      height: 40vh;
+      height: 30vh;
     }
     .nav-open .forest-wrapper {
       transform: translateY(-30vh);
@@ -338,7 +430,7 @@ main {
     }
 
     .nav-panel .nav a {
-        height: 3rem;
+        text-align: end;
     }
 
     .nav-panel .nav-links {

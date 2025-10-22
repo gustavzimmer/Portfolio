@@ -26,7 +26,7 @@
                 </article>
 
                 <article class=" col-start-2 row-start-3 flex flex-col items-center projektCard">
-                    <div class="w-[100px] h-[100px] flex items-center justify-center relative projektImgContainer">
+                    <div class="w-[100px] h-[100px] flex items-center justify-center relative pb-2 projektImgContainer">
                         <svg class="absolute" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="50" cy="50" r="50" fill="url(#paint0_radial_86_653)"/>
                             <defs>

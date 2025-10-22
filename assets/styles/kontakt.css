@@ -48,7 +48,7 @@
   .input-wrapper .icon {
     position: absolute;
     left: 0.75rem;
-    top: 50%;
+    bottom: -0.4rem;
     transform: translateY(-50%);
     pointer-events: none;
   }
@@ -57,12 +57,14 @@
     width: 100%;
     padding-left: 3.5rem;
     height: 2.5rem;
-    padding-bottom: 2rem;
     padding-top: 2rem;
   }
 
+  .input-wrapper input{
+    padding-bottom: 0.6rem;
+  }
+
   .input-wrapper textarea {
-    height: 6rem;
     padding-top: 1rem;
   }
 
@@ -71,9 +73,11 @@
   }
 
   .wpcf7-not-valid-tip{
+    font-size: 12px;
+    width: 60px;
     position: absolute;
-    bottom: -1.5rem;
-    left: 3.5rem;
+    bottom: 0rem;
+    right: 0;
   }
   .wpcf7-form-control-wrap[data-name="your-message"] .wpcf7-not-valid-tip{
     bottom: 0;
@@ -82,12 +86,22 @@
   .wpcf7-response-output{
     border: none !important;
     position: absolute;
-    bottom: -4rem;
+    bottom: 0;
+  }
+
+  @media (min-width: 400px) {
+    .wpcf7-not-valid-tip{
+      width: auto;
+    }
   }
 
   @media (min-width: 1024px) {
     .kontaktLinks{
       transform: translateX(0);
       opacity: 1;
+    }
+
+    .wpcf7-response-output{
+      bottom: -2rem;
     }
   }

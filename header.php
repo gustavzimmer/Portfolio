@@ -27,7 +27,7 @@
     </div>
 
     <div class="headerLink flex flex-col  md:flex-row gap-4 opacity-70">
-        <a href="">+46-733 62 73 81</a>
-        <a href="">gustav.zimmer@hotmail.com</a>
+        <a href="" class="nav-hover-effekt">+46-733 62 73 81</a>
+        <a href="" class="nav-hover-effekt">gustav.zimmer@hotmail.com</a>
     </div>
 </header>
