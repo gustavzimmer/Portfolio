@@ -12,7 +12,7 @@
 <?php wp_body_open(); ?>
 
 
-<header id="preload" class="flex items-center contain py-[2rem] h-[150px] mx-auto">
+<header id="preload" class="flex items-center contain py-[2rem] h-[100px] mx-auto">
     <div class="moon-wrapper">
         <svg class="moon" width="100" height="100" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="75" cy="75" r="75" fill="url(#paint0_radial_16_3263)" />
@@ -27,7 +27,7 @@
     </div>
 
     <div class="headerLink flex flex-col  md:flex-row gap-4 opacity-70">
-        <a href="" class="nav-hover-effekt">+46-733 62 73 81</a>
-        <a href="" class="nav-hover-effekt">gustav.zimmer@hotmail.com</a>
+        <a href="tel:+46733627381" class="nav-hover-effekt">+46-733 62 73 81</a>
+        <a href="mailto:gustav.zimmer@hotmail.com" class="nav-hover-effekt">gustav.zimmer@hotmail.com</a>
     </div>
 </header>

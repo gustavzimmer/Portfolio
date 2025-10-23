@@ -7,4 +7,5 @@
     --color-first-layer: #0A0A0A;
     --color-middle-layer: #161513;
     --color-back-layer: #26231F;
+    --breakpoint-smd: 700px;
 }

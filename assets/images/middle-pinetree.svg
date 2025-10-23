@@ -2,66 +2,62 @@
   viewBox="0 0 1440 460"
   xmlns="http://www.w3.org/2000/svg"
   role="img"
-  aria-label="Svart silhuett av skog i nederkant"
+  aria-label="Mörk silhuett av skog i nederkant (mellanlager)"
   style="display:block;width:100%;height:auto;color:#161513"
   preserveAspectRatio="none"
 >
-  <title>Skogssilhuett (loopande, högre mark)</title>
+  <title>Skogssilhuett (mellanlager, justerade granar)</title>
 
   <defs>
     <!-- Granform -->
-    <g id="pine">
-      <polygon points="0,0 40,0 20,-36" />
-      <polygon points="4,-15 36,-15 20,-52" />
-      <polygon points="8,-28 32,-28 20,-68" />
-      <rect x="17" y="-20" width="6" height="22" />
+    <g id="pine-mid">
+      <polygon points="0,0 36,0 18,-34" />
+      <polygon points="3,-14 33,-14 18,-48" />
+      <polygon points="6,-26 30,-26 18,-62" />
+      <rect x="15" y="-18" width="5" height="18" />
     </g>
 
-    <!-- Tile (1440px bredd, justerad höjd) -->
-    <symbol id="forest-tile" viewBox="0 0 1440 460" overflow="visible">
-      <!-- Kulle / horisont -->
+    <!-- Tile -->
+    <symbol id="forest-tile-mid" viewBox="0 0 1440 460" overflow="visible">
+      <!-- Kulle / marklinje -->
       <path
-        d="M0,230
-           C250,210 500,250 720,230
-           C960,205 1200,245 1440,230
+        d="M0,240
+           C240,225 500,255 720,240
+           C960,225 1200,255 1440,240
            L1440,460 L0,460 Z"
         fill="currentColor"
       />
-
-      <!-- Högre bottenremsa (200px) -->
       <rect x="0" y="260" width="1440" height="200" fill="currentColor" />
 
-      <!-- Granar -->
+      <!-- Granar på marklinjen -->
       <g fill="currentColor">
-        <!-- Vänster -->
-        <g transform="translate(80,250) scale(1.6)"><use href="#pine"/></g>
-        <g transform="translate(160,252) scale(1.35)"><use href="#pine"/></g>
-        <g transform="translate(230,248) scale(1.7)"><use href="#pine"/></g>
-        <g transform="translate(310,250) scale(1.25)"><use href="#pine"/></g>
-        <g transform="translate(380,252) scale(1.5)"><use href="#pine"/></g>
+        <!-- Vänster sektion -->
+        <g transform="translate(60,242) scale(1.0)"><use href="#pine-mid"/></g>
+        <g transform="translate(140,244) scale(0.85)"><use href="#pine-mid"/></g>
+        <g transform="translate(210,246) scale(1.15)"><use href="#pine-mid"/></g>
+        <g transform="translate(280,244) scale(0.9)"><use href="#pine-mid"/></g>
+        <g transform="translate(360,248) scale(1.05)"><use href="#pine-mid"/></g>
 
         <!-- Mitten -->
-        <g transform="translate(520,246) scale(1.55)"><use href="#pine"/></g>
-        <g transform="translate(590,250) scale(1.35)"><use href="#pine"/></g>
-        <g transform="translate(670,248) scale(1.8)"><use href="#pine"/></g>
-        <g transform="translate(750,252) scale(1.45)"><use href="#pine"/></g>
-        <g transform="translate(820,248) scale(1.55)"><use href="#pine"/></g>
+        <g transform="translate(500,246) scale(1.1)"><use href="#pine-mid"/></g>
+        <g transform="translate(570,248) scale(0.9)"><use href="#pine-mid"/></g>
+        <g transform="translate(640,250) scale(1.05)"><use href="#pine-mid"/></g>
+        <g transform="translate(710,244) scale(0.95)"><use href="#pine-mid"/></g>
+        <g transform="translate(780,248) scale(1.1)"><use href="#pine-mid"/></g>
 
-        <!-- Höger -->
-        <g transform="translate(980,248) scale(1.65)"><use href="#pine"/></g>
-        <g transform="translate(1060,252) scale(1.35)"><use href="#pine"/></g>
-        <g transform="translate(1130,250) scale(1.55)"><use href="#pine"/></g>
-        <g transform="translate(1210,248) scale(1.75)"><use href="#pine"/></g>
-        <g transform="translate(1290,252) scale(1.45)"><use href="#pine"/></g>
+        <!-- Höger sektion -->
+        <g transform="translate(950,246) scale(1.05)"><use href="#pine-mid"/></g>
+        <g transform="translate(1030,248) scale(0.9)"><use href="#pine-mid"/></g>
+        <g transform="translate(1110,250) scale(1.0)"><use href="#pine-mid"/></g>
+        <g transform="translate(1190,246) scale(0.95)"><use href="#pine-mid"/></g>
+        <g transform="translate(1270,248) scale(1.1)"><use href="#pine-mid"/></g>
       </g>
     </symbol>
   </defs>
 
-  <!-- Dubbel tile + sömlös rörelse -->
-  <g>
-    <g id="scroll">
-      <use href="#forest-tile" x="0" y="0"/>
-      <use href="#forest-tile" x="1440" y="0"/>
-    </g>
+  <!-- Dubbel tile för sömlös loop -->
+  <g id="scroll-mid">
+    <use href="#forest-tile-mid" x="0" y="0"/>
+    <use href="#forest-tile-mid" x="1440" y="0"/>
   </g>
 </svg>

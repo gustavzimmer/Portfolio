@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const projektMoonEl = document.querySelector('.moon-wrapper');
     if(window.location.pathname.includes("projekt")) {
       projektBtn.classList.toggle("activePage");
-      projektMoonEl.classList.add("projektPageMoon");
+      document.documentElement.classList.add("projektPage");
     }
     const kontaktBtn = document.getElementById('kontaktBtn');
     if(window.location.pathname.includes("kontakt")) {

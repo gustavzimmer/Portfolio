@@ -20,6 +20,10 @@
         wp_register_script( 'myScript', $scriptsrc , array('jquery'), '3.7.1',  true );
         wp_enqueue_script( 'myScript' );
 
+        $scriptsrc = get_stylesheet_directory_uri() . '/js/projekt.js';
+        wp_register_script( 'ProjektScript', $scriptsrc , array('jquery'), '3.7.1',  true );
+        wp_enqueue_script( 'ProjektScript' );
+
     }   
     add_action("wp_enqueue_scripts", "theme_scripts");
 

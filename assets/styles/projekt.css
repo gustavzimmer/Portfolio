@@ -1,3 +1,132 @@
+ /* ===== Tema & util ===== */
+:root {
+  --bg: #0A0A0A;
+  --fg: #F5F5F5;
+  --muted: rgba(245,245,245,.7);
+  --accent: #b7f0ff;
+  --line: rgba(183,240,255,.35);
+  --card: rgba(20,20,20,.9);
+  --shadow: 0 10px 30px rgba(0,0,0,.4);
+}
+
+.sr-only {
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ===== Stjärnkarta ===== */
+.projects-sky {
+  position: relative;
+  background: transparent;
+  isolation: isolate;
+  min-height: 40vh;
+  width: 100%;
+}
+
+#sky-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: block; z-index: 0;
+}
+
+/* Lager med interaktiva stjärnor (knappar) */
+.stars-layer {
+  position: relative;
+  width: 100%; height: 60vh;
+  z-index: 1;
+}
+
+/* Själva stjärn-knappen */
+.star {
+  --size: 10px;
+  --glow: 0.6;
+  position: absolute;
+  width: var(--size); height: var(--size);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #fff 0%, #dff7ff 40%, transparent 70%);
+  box-shadow:
+    0 0 calc(var(--size) * 0.8) rgba(255,255,255, calc(.3 * var(--glow))),
+    0 0 calc(var(--size) * 1.6) rgba(183,240,255, calc(.5 * var(--glow)));
+  border: 0;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+}
+.star:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.star:hover { transform: translate(-50%, -50%) scale(1.15); }
+.star[data-active="true"] { filter: drop-shadow(0 0 16px rgba(183,240,255,.6)); }
+
+/* Tooltip */
+.star-tooltip {
+  position: absolute;
+  pointer-events: none;
+  min-width: 150px;
+  max-width: 260px;
+  padding: .5rem .75rem;
+  font-size: 1.35rem; color: var(--fg);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  opacity: 0; transform: translate(-50%, calc(-100% - 10px));
+  z-index: 2;
+  transform-origin: 50% 100%;
+  transition: opacity 150ms ease, transform 150ms ease, left 100ms ease;
+}
+
+.tooltipTitle{
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 5%;
+}
+.star-tooltip[data-show="true"] { opacity: 1; transform: translate(-50%, calc(-100% - 6px)); }
+.star-tooltip .meta { color: var(--muted); font-size: .8rem; margin-top: .25rem; }
+
+/* Konstellationslinjer ritas på canvas – ingen extra CSS behövs */
+
+/* Modal */
+.modal[hidden] { display: none; }
+.modal { position: fixed; inset: 0; z-index: 30; }
+
+.modal-card {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%,-46%) scale(.98);
+  width: min(720px, 92vw);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; box-shadow: var(--shadow);
+  opacity: 0; transition: opacity 220ms ease, transform 220ms ease;
+}
+.modal:not([hidden]) .modal-backdrop { opacity: 1; }
+.modal:not([hidden]) .modal-card { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+
+.modal-close {
+  position: absolute; top: 10px; right: 12px;
+  background: transparent; color: var(--fg); border: 0;
+  font-size: 1.8rem; line-height: 1; cursor: pointer;
+}
+.modal-header { padding: 1.25rem 1.25rem 0 1.25rem; }
+.modal-header h3 { margin: 0 2rem 0 0; }
+.modal-subtitle { margin: .25rem 0 0 0; color: var(--muted); }
+.modal-body { padding: 1rem 1.25rem 1.25rem; color: var(--fg); }
+.modal-actions { padding: 0 1.25rem 1.25rem; }
+.btn {
+  display:inline-block; 
+  padding:.6rem 1rem; 
+  border-radius:10px; 
+  text-decoration:none;
+  color:#0a0a0a; 
+  background:#e6fbff; 
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.225rem;
+}
+
+/* Responsivt höjdjust */
+/* @media (min-width: 768px) {
+  .stars-layer { height: 78vh; }
+}
+@media (min-width: 1024px) {
+  .stars-layer { height: 82vh; }
+} */
+
  /* Projekt Section */
 
   .projektCardTitle{
