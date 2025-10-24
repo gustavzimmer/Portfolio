@@ -89,7 +89,7 @@
 .modal-card {
   position: absolute; left: 50%; top: 50%;
   transform: translate(-50%,-46%) scale(.98);
-  width: min(720px, 92vw);
+  width: min(500px, 92vw);
   background: var(--card);
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 16px; box-shadow: var(--shadow);
