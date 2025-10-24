@@ -9,8 +9,8 @@
             
                 <div class="kontaktLinks pt-4 flex flex-col items-left smd:items-end">
                     <h3 class="kontaktLinksHeader">Direkt kontakt</h3>
-                    <a>+46 733-62 73 81</a>
-                    <a>gustav.zimmer@hotmail.com</a>
+                    <a href="tel:+46733627381">+46 733-62 73 81</a>
+                    <a href="mailto:gustav.zimmer@hotmail.com">gustav.zimmer@hotmail.com</a>
                 </div>
         </section>
 

@@ -28,9 +28,97 @@
       size: 1.0,
       group: 'frontend', 
     },
-
-
+    {
+      id: 'AstroDash',
+      title: 'AstroDash',
+      subtitle: 'Spel / Socket.IO + Prisma',
+      url: 'https://example.com/orion',
+      size: 1.0,
+      group: 'frontend', 
+    },
   ];
+
+  let animStart = null;
+let animDuration = 2200;      // ms för hela “ritningen”
+let animRunning = true;       // true = rita progressivt
+let paths = [];               // förkonstruerade segment per grupp
+
+function buildConstellationPaths() {
+  paths = [];
+  Object.values(groups).forEach(list => {
+    if (!list || list.length < 2) return;
+
+    // ordna så dragningen blir stabil (enkel sort)
+    const ordered = [...list].sort((a,b)=> (a.x+a.y) - (b.x+b.y));
+
+    // pixelkoordinater (utan parallax)
+    const pts = ordered.map(p => ({ x: p.x * w, y: p.y * h }));
+
+    // bygg segment + längder
+    const segments = [];
+    let totalLen = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i], b = pts[i+1];
+      const len = Math.hypot(b.x - a.x, b.y - a.y);
+      segments.push({ a, b, len });
+      totalLen += len;
+    }
+    paths.push({ segments, totalLen });
+  });
+}
+
+function drawConstellationsAnimated(progress) {
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(183,240,255,0.35)';
+  ctx.shadowColor = 'rgba(183,240,255,0.35)';
+  ctx.shadowBlur = 6;
+
+  for (const path of paths) {
+    const { segments, totalLen } = path;
+    let target = totalLen * progress;
+    ctx.beginPath();
+
+    for (const seg of segments) {
+      if (target <= 0) break;
+      const { a, b, len } = seg;
+
+      if (target >= len) {
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        target -= len;
+      } else {
+        const t = target / len;
+        const x = a.x + (b.x - a.x) * t;
+        const y = a.y + (b.y - a.y) * t;
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(x, y);
+        break;
+      }
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawConstellationsFull() {
+  ctx.save();
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(183,240,255,0.35)';
+  ctx.shadowColor = 'rgba(183,240,255,0.35)';
+  ctx.shadowBlur = 6;
+
+  for (const path of paths) {
+    ctx.beginPath();
+    for (const seg of path.segments) {
+      ctx.moveTo(seg.a.x, seg.a.y);
+      ctx.lineTo(seg.b.x, seg.b.y);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
 
   // ==== 2) Element & state ====
   const section = document.getElementById('projects-sky');
@@ -83,6 +171,9 @@
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    buildConstellationPaths();
+    animRunning = true;
+    animStart = null;
     drawOnce(); // uppdatera bakgrund direkt
     positionStarButtons();
   }
@@ -99,15 +190,17 @@
     });
   }
 
+  function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
+
   // ==== 4) Rita stjärnhimmel + konstellationer (canvas) ====
-  function drawOnce(t=0) {
+  function drawOnce(timestamp = performance.now()) {
     ctx.clearRect(0,0,w,h);
 
-    // Mjuk drift baserat på mus (parallaxkänsla, väldigt subtilt)
+    /* parrallax */
     const driftX = 0;
     const driftY = 0;
 
-/*     // Stjärn bakgrund – sparsamt
+/*     // Stjärn bakgrund
     ctx.save();
     ctx.globalAlpha = 0.7;
     for (let i = 0; i < Math.min(160, Math.round((w*h)/9000)); i++) {
@@ -121,26 +214,20 @@
     }
     ctx.restore(); */
 
-    // Konstellationslinjer per grupp
-    ctx.save();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(183,240,255,0.35)';
-    ctx.shadowColor = 'rgba(183,240,255,0.35)';
-    ctx.shadowBlur = 6;
-
-    Object.values(groups).forEach(list => {
-      if (list.length < 2) return;
-      // sortera för stabil linjedragning (x+y)
-      const ordered = [...list].sort((a,b)=> (a.x+a.y) - (b.x+b.y));
-      ctx.beginPath();
-      ordered.forEach((p, i) => {
-        const x = p.x * w + driftX * 0.4;
-        const y = p.y * h + driftY * 0.35;
-        if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      });
-      ctx.stroke();
-    });
-    ctx.restore();
+    if (animRunning) {
+      if (animStart == null) animStart = timestamp;
+      const elapsed = timestamp - animStart;
+      const raw = Math.min(1, elapsed / animDuration);
+      const p = easeOutCubic(raw);
+  
+      drawConstellationsAnimated(p);
+  
+      if (raw >= 1) {
+        animRunning = false;
+      }
+    } else {
+      drawConstellationsFull();
+    }
   }
 
   function loop(t) {
@@ -158,8 +245,14 @@
       btn.setAttribute('aria-label', `${p.title} – öppna`);
       btn.dataset.star = p.id;
 
-      btn.addEventListener('mouseenter', e => showTooltip(p, e.currentTarget));
-      btn.addEventListener('mouseleave', hideTooltip);
+      btn.addEventListener('mouseenter', e => {
+        showTooltip(p, e.currentTarget);
+        stopAutoTips();
+      });
+      btn.addEventListener('mouseleave', () => {
+        hideTooltip();
+        startAutoTips();
+      });
       btn.addEventListener('focus', e => showTooltip(p, e.currentTarget));
       btn.addEventListener('blur', hideTooltip);
       btn.addEventListener('click', () => openModal(p));
@@ -168,6 +261,78 @@
     });
     starsLayer.appendChild(frag);
   }
+
+const AUTO_TIPS_ENABLED = true;
+const AUTO_TIP_INTERVAL_MS = 6000;
+const AUTO_TIP_SHOW_MS = 3000;
+const AUTO_TIP_PAUSE_AFTER_INTERACT = 3000;
+
+let autoTipTimer = null;
+let autoTipHideTimer = null;
+let autoTipIndex = 0;
+let autoTipOrder = [];
+let lastUserInteraction = 0;
+
+function buildAutoTipOrder() {
+  autoTipOrder = projects.map(p => p.id);
+  for (let i = autoTipOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [autoTipOrder[i], autoTipOrder[j]] = [autoTipOrder[j], autoTipOrder[i]];
+  }
+  autoTipIndex = 0;
+}
+
+function nextAutoTipId() {
+  if (autoTipOrder.length === 0) buildAutoTipOrder();
+  const id = autoTipOrder[autoTipIndex % autoTipOrder.length];
+  autoTipIndex++;
+  return id;
+}
+
+function startAutoTips() {
+  if (!AUTO_TIPS_ENABLED) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  stopAutoTips();
+  autoTipTimer = setInterval(() => {
+
+    const modalOpen = typeof modal !== 'undefined' && !modal.hidden;
+    if (Date.now() - lastUserInteraction < AUTO_TIP_PAUSE_AFTER_INTERACT || modalOpen) return;
+
+    const id = nextAutoTipId();
+    const p = projects.find(x => x.id === id);
+    const el = document.querySelector(`[data-star="${id}"]`);
+    if (!p || !el) return;
+
+    showTooltip(p, el);
+
+    clearTimeout(autoTipHideTimer);
+    autoTipHideTimer = setTimeout(() => {
+      
+      hideTooltip();
+    }, AUTO_TIP_SHOW_MS);
+  }, AUTO_TIP_INTERVAL_MS);
+}
+
+function stopAutoTips() {
+  clearInterval(autoTipTimer);
+  autoTipTimer = null;
+  clearTimeout(autoTipHideTimer);
+  autoTipHideTimer = null;
+}
+
+function markInteractionAndPause() {
+  lastUserInteraction = Date.now();
+}
+
+['pointerdown','touchstart','keydown','focusin'].forEach(evt => {
+  window.addEventListener(evt, markInteractionAndPause, { passive: true });
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopAutoTips();
+  else startAutoTips();
+});
 
   function showTooltip(project, el) {
     const rect = el.getBoundingClientRect();
@@ -220,9 +385,9 @@
     modalBody.innerHTML = p.description || '';
     modalLink.href = p.url || '#';
     modal.hidden = false;
-    // lås scroll i bakgrunden
+
     document.documentElement.classList.add('nav-open-modal');
-    // fokus-hantering
+
     modal.querySelector('.modal-close').focus();
   }
   function closeModal() {
@@ -242,6 +407,7 @@
     buildStars();
     resize();
     loop();
+    startAutoTips();
 
     starsLayer.addEventListener('pointermove', (e) => {
       const r = starsLayer.getBoundingClientRect();
