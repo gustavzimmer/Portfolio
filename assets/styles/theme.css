@@ -93,6 +93,20 @@
   }
 }
 
+#CookiebotWidget{
+  transition: bottom 600ms cubic-bezier(.22,.61,.36,1),
+  left 600ms cubic-bezier(.22,.61,.36,1),
+  opacity 1s cubic-bezier(.22,.61,.36,1) 1s !important;
+}
+@media(max-width: 768px) {
+  /* CookieBot */
+  .nav-open #CookiebotWidget{
+    bottom: 165px !important;
+    left: 2rem !important;
+  }
+}
+
+
 h1, h2, h3 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(3rem, 5vw, 4rem);
@@ -360,13 +374,24 @@ main {
     animation-play-state: paused;
   }
 
-
-
-
-  
   .nav-open,
   .nav-open body {
     overflow: hidden;
+  }
+
+  @media (min-height: 550px) {
+    .frontpageContainer{
+      height: 50vh;
+    }
+  }
+  @media (min-height: 700px) {
+    .frontpageContainer{
+      height: 60vh;
+      align-items: end;
+    }
+    .frontpage-title{
+      padding-bottom: 2rem;
+    }
   }
 
   @media (min-width: 768px) {
