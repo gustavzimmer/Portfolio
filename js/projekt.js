@@ -64,7 +64,7 @@ let paths = [];
 // === konstanter för intro ===
 const RESPECT_RM = true;
 const STAR_RANDOMIZE = true;
-const STAR_STAGGER_MS = 1000;
+const STAR_STAGGER_MS = 500;
 
 
 function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
@@ -323,7 +323,7 @@ const AUTO_TIPS_ENABLED = true;
 const AUTO_TIP_INTERVAL_MS = 6000;
 const AUTO_TIP_SHOW_MS = 4000;
 const AUTO_TIP_PAUSE_AFTER_INTERACT = 3000;
-const AUTO_TIP_START_DELAY_MS = 4000;
+const AUTO_TIP_START_DELAY_MS = 2000;
 
 let autoTipTimer = null;
 let autoTipHideTimer = null;

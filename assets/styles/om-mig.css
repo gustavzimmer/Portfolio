@@ -5,7 +5,15 @@
     color: #EAB308;
   }
 
+  .om-mig-spcWord:hover{
+    cursor: pointer;
+  }
+
   .omMigText {
     font-size: clamp(0.875rem, 2vw, 1.125rem);
     opacity: 0.8;
+  }
+
+  .dot-word {
+    color: #f5f3e7;
   }

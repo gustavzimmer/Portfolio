@@ -28,10 +28,6 @@
     transition: background-position .35s ease, text-decoration-color .35s ease;
   }
 
-  .kontaktLinks a:hover {
-    background-position: left 0;
-  }
-
   @media (min-width: 700px) {
     
   }

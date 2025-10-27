@@ -1,13 +1,19 @@
-.moon-wrapper {
-  position: absolute;
-  right: 2rem;
-  top: 2rem;
-  transform: scale(0.2);
-  transition:
-    transform 600ms cubic-bezier(.22,.61,.36,1);
-  z-index: 10;
+.moon-wrapper{
+  position:absolute;
+  right:2rem;
+  top:2rem;
+  z-index:10;
+  touch-action:none;
+  will-change: transform;
+}
+.moon-wrapper img, .moon-wrapper svg { 
+  user-select:none; 
+  -webkit-user-drag:none; 
 }
 
+#preload{
+  z-index: 100;
+}
 :root.loaded .moon-wrapper{
   transform: none;
 }
@@ -140,21 +146,17 @@ header {
   opacity: 0.5;
 }
 
-.frontpageContainer{
-  opacity: 0;
-  transform: translateY(-20%);
-  transition: transform 1s cubic-bezier(.22,.61,.36,1), opacity 1s cubic-bezier(.22,.61,.36,1);
-}
-
-:root.loaded .frontpageContainer{
-  transform: translateY(0);
-  opacity: 1;
-}
 
 .frontpage-title {
     position: relative;
     z-index: 5;
     pointer-events: auto;
+}
+
+.scramble-cursor {
+  display: inline-block;
+  margin-left: 0.15ch;
+  opacity: 1;
 }
 
 .frontpage-title h1{

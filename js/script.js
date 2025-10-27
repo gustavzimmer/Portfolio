@@ -30,6 +30,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const omBtn = document.getElementById('om-mig-btn');
     if(window.location.pathname.includes("om-mig")) {
       omBtn.classList.toggle("activePage");
+      
+      const omMigParEl = document.querySelector('.omMigSpcWordP');
+      const omMigWordArr = omMigParEl.textContent.split(' ');
+      omMigParEl.textContent = '';
+      omMigWordArr.forEach((word) => {
+        const span = document.createElement('span');
+        span.classList.add('om-mig-spcWord');
+  
+        if(word === '·') {
+          span.classList.add('dot-word');
+        }
+        
+        span.textContent = word + ' ';
+        omMigParEl.appendChild(span);
+      })
     }
     const projektBtn = document.getElementById('projektBtn');
     const projektMoonEl = document.querySelector('.moon-wrapper');

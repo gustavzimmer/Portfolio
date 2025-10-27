@@ -7,7 +7,7 @@
         <canvas id="sky-canvas" aria-hidden="true"></canvas>
         <div id="stars-layer" class="stars-layer" role="list"></div>
 
-        <!-- Tooltip (visas vid hover/fokus) -->
+        <!-- Tooltip -->
         <div id="star-tooltip" class="star-tooltip" role="status" aria-live="polite"></div>
 
         <!-- Modal för projekt -->
