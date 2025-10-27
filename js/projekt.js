@@ -387,6 +387,14 @@ function markInteractionAndPause() {
   window.addEventListener(evt, markInteractionAndPause, { passive: true });
 });
 
+window.addEventListener('resize', () => {
+  hideTooltip();
+  stopAutoTips();
+  setTimeout(() => {
+    startAutoTips();
+  }, 1000)
+});
+
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopAutoTips();
   else startAutoTips();
