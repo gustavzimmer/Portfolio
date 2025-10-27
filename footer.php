@@ -17,7 +17,7 @@
                         <div class="nav">
                             <a aria-label="Om mig" id="om-mig-btn" href="/gustav-portfolio/om-mig" class="nav-hover-effekt">Om mig</a>
                             <a aria-label="Projekt" id="projektBtn" href="/gustav-portfolio/projekt" class="nav-hover-effekt">Projekt</a>
-                            <a aria-label="Kontakt" id="kontaktBtn" href="/kontakt" class="nav-hover-effekt">Kontakt</a>
+                            <a aria-label="Kontakt" id="kontaktBtn" href="/gustav-portfolio/kontakt" class="nav-hover-effekt">Kontakt</a>
                         </div>
                         <div class="nav-links">
                             <a href="https://github.com/gustavzimmer" target="_blank" class="icon-hover-effekt">

@@ -39,6 +39,7 @@
 .star {
   --size: 10px;
   --glow: 0.6;
+  opacity: 0;
   position: absolute;
   width: var(--size); height: var(--size);
   border-radius: 50%;
@@ -48,9 +49,10 @@
     0 0 calc(var(--size) * 1.6) rgba(183,240,255, calc(.5 * var(--glow)));
   border: 0;
   cursor: pointer;
-  transform: translate(-50%, -50%);
-  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition: opacity260ms ease, transform 360ms ease, box-shadow 200ms ease, filter 200ms ease;
 }
+.star[data-visible="true"] { opacity: 1; transform: translate(-50%, -50%) scale(1);}
 .star:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .star:hover { transform: translate(-50%, -50%) scale(1.15); }
 .star[data-active="true"] { filter: drop-shadow(0 0 16px rgba(183,240,255,.6)); }

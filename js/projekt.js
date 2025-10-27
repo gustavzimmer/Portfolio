@@ -36,22 +36,48 @@
       size: 1.0,
       group: 'frontend', 
     },
+    {
+      id: 'assist-me',
+      title: 'Assist Me',
+      subtitle: 'Spel / Socket.IO + Prisma',
+      url: 'https://example.com/orion',
+      size: 1.0,
+      group: 'backend', 
+    },
+    {
+      id: 'bookworm',
+      title: 'Bookworm',
+      subtitle: 'Spel / Socket.IO + Prisma',
+      url: 'https://example.com/orion',
+      size: 1.0,
+      group: 'backend', 
+    },
   ];
 
-  let animStart = null;
-let animDuration = 2200;      // ms för hela “ritningen”
-let animRunning = true;       // true = rita progressivt
-let paths = [];               // förkonstruerade segment per grupp
+
+let animStart = null;
+let animDuration = 3000;
+let animRunning = false;
+let animHasPlayed = false
+let paths = [];
+
+// === konstanter för intro ===
+const RESPECT_RM = true;
+const STAR_RANDOMIZE = true;
+const STAR_STAGGER_MS = 1000;
+
+
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
 
 function buildConstellationPaths() {
   paths = [];
   Object.values(groups).forEach(list => {
     if (!list || list.length < 2) return;
 
-    // ordna så dragningen blir stabil (enkel sort)
+    // ordna så dragningen blir stabil
     const ordered = [...list].sort((a,b)=> (a.x+a.y) - (b.x+b.y));
 
-    // pixelkoordinater (utan parallax)
+    // pixelkoordinater 
     const pts = ordered.map(p => ({ x: p.x * w, y: p.y * h }));
 
     // bygg segment + längder
@@ -119,6 +145,31 @@ function drawConstellationsFull() {
   ctx.restore();
 }
 
+function revealStarsSequential(onDone){
+  const prefersReduce = RESPECT_RM && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  const stars = Array.from(document.querySelectorAll('.star'));
+  if (STAR_RANDOMIZE) shuffle(stars);
+
+  // Om reduce-motion: visa direkt
+  if (prefersReduce){
+    stars.forEach(el => el.dataset.visible = 'true');
+    onDone?.();
+    return;
+  }
+
+  let i = 0;
+  function step(){
+    if (i < stars.length){
+      stars[i].dataset.visible = 'true';
+      i++;
+      setTimeout(step, STAR_STAGGER_MS);
+    } else {
+      onDone?.();
+    }
+  }
+  step();
+}
 
   // ==== 2) Element & state ====
   const section = document.getElementById('projects-sky');
@@ -171,12 +222,21 @@ function drawConstellationsFull() {
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  
     buildConstellationPaths();
-    animRunning = true;
-    animStart = null;
-    drawOnce(); // uppdatera bakgrund direkt
     positionStarButtons();
+  
+    // RITA ENDAST FULLA LINJER EFTER FÖRSTA ANIM
+    if (animHasPlayed) {
+      animRunning = false;
+    } else {
+      animRunning = false;
+    }
+  
+    drawOnce();
   }
+  
+  
 
   function positionStarButtons() {
     projects.forEach(p => {
@@ -184,7 +244,7 @@ function drawConstellationsFull() {
       if (!el) return;
       el.style.left = (p.x * 100) + '%';
       el.style.top  = (p.y * 100) + '%';
-      const px = 8 + (p.size || 1) * 6; // 8–16px
+      const px = 8 + (p.size || 1) * 6;
       el.style.setProperty('--size', px + 'px');
       el.style.setProperty('--glow', (0.6 + (p.size-1)*0.8).toFixed(2));
     });
@@ -192,42 +252,26 @@ function drawConstellationsFull() {
 
   function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
 
-  // ==== 4) Rita stjärnhimmel + konstellationer (canvas) ====
-  function drawOnce(timestamp = performance.now()) {
+  // ==== 4) Rita stjärnhimmel ====
+  function drawOnce(timestamp = performance.now()){
     ctx.clearRect(0,0,w,h);
-
-    /* parrallax */
-    const driftX = 0;
-    const driftY = 0;
-
-/*     // Stjärn bakgrund
-    ctx.save();
-    ctx.globalAlpha = 0.7;
-    for (let i = 0; i < Math.min(160, Math.round((w*h)/9000)); i++) {
-      const x = (i * 73 % w) + driftX * 0.3;
-      const y = (i * 131 % h) + driftY * 0.25;
-      const r = (i % 3 === 0 ? 1.1 : 0.6);
-      ctx.fillStyle = i % 7 === 0 ? 'rgba(183,240,255,0.8)' : 'rgba(255,255,255,0.8)';
-      ctx.beginPath();
-      ctx.arc((x+w)%w, (y+h)%h, r, 0, Math.PI*2);
-      ctx.fill();
-    }
-    ctx.restore(); */
-
+  
+    // linjer
     if (animRunning) {
       if (animStart == null) animStart = timestamp;
-      const elapsed = timestamp - animStart;
-      const raw = Math.min(1, elapsed / animDuration);
+      const raw = Math.min(1, (timestamp - animStart) / animDuration);
       const p = easeOutCubic(raw);
-  
       drawConstellationsAnimated(p);
-  
       if (raw >= 1) {
         animRunning = false;
+        animHasPlayed = true;
       }
-    } else {
-      drawConstellationsFull();
+    } else if (animHasPlayed) {
+
+      if (paths.length) drawConstellationsFull();
     }
+
+
   }
 
   function loop(t) {
@@ -262,10 +306,24 @@ function drawConstellationsFull() {
     starsLayer.appendChild(frag);
   }
 
+  function startSkyIntro(){
+
+    revealStarsSequential(() => {
+
+      if (!animHasPlayed){
+        animRunning = true;
+        animStart = null;
+      }
+    });
+  }
+
+
+
 const AUTO_TIPS_ENABLED = true;
 const AUTO_TIP_INTERVAL_MS = 6000;
-const AUTO_TIP_SHOW_MS = 3000;
+const AUTO_TIP_SHOW_MS = 4000;
 const AUTO_TIP_PAUSE_AFTER_INTERACT = 3000;
+const AUTO_TIP_START_DELAY_MS = 4000;
 
 let autoTipTimer = null;
 let autoTipHideTimer = null;
@@ -406,8 +464,12 @@ document.addEventListener('visibilitychange', () => {
     placeProjects();
     buildStars();
     resize();
+    buildConstellationPaths();
+    startSkyIntro();
     loop();
-    startAutoTips();
+    setTimeout(() => {
+      startAutoTips();
+    }, AUTO_TIP_START_DELAY_MS || 2000);
 
     starsLayer.addEventListener('pointermove', (e) => {
       const r = starsLayer.getBoundingClientRect();

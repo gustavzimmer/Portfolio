@@ -140,6 +140,17 @@ header {
   opacity: 0.5;
 }
 
+.frontpageContainer{
+  opacity: 0;
+  transform: translateY(-20%);
+  transition: transform 1s cubic-bezier(.22,.61,.36,1), opacity 1s cubic-bezier(.22,.61,.36,1);
+}
+
+:root.loaded .frontpageContainer{
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .frontpage-title {
     position: relative;
     z-index: 5;
