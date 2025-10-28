@@ -36,22 +36,6 @@
       size: 1.0,
       group: 'frontend', 
     },
-    {
-      id: 'assist-me',
-      title: 'Assist Me',
-      subtitle: 'Spel / Socket.IO + Prisma',
-      url: 'https://example.com/orion',
-      size: 1.0,
-      group: 'backend', 
-    },
-    {
-      id: 'bookworm',
-      title: 'Bookworm',
-      subtitle: 'Spel / Socket.IO + Prisma',
-      url: 'https://example.com/orion',
-      size: 1.0,
-      group: 'backend', 
-    },
   ];
 
 

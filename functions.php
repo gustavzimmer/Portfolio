@@ -1,4 +1,11 @@
 <?php
+    add_action('wp_enqueue_scripts', function () {
+        wp_dequeue_script('scrolltrigger');
+        wp_deregister_script('scrolltrigger');
+        wp_dequeue_script('gsap-scrolltrigger');
+        wp_deregister_script('gsap-scrolltrigger');
+    }, 5);
+    
     function theme_scripts() {
 
         $style_ver = filemtime( get_stylesheet_directory() . '/build/index.css' );
@@ -24,21 +31,31 @@
         wp_register_script( 'ProjektScript', $scriptsrc , array('jquery'), '3.7.1',  true );
         wp_enqueue_script( 'ProjektScript' );
 
-        wp_enqueue_script( 'gsap-js', 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js', array(), false, true );
-        // ScrollTrigger - with gsap.js passed as a dependency
-        wp_enqueue_script( 'gsap-st', 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js', array('gsap-js'), false, true );
-
-        wp_enqueue_script( 'gsap-draggable','https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js', array('gsap-js'), false, true );
-
-        wp_enqueue_script( 'gsap-inertia','https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js', array('gsap-js'), false, true );
-
-        wp_enqueue_script( 'gsap-scramble','https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js', array('gsap-js'), false, true );
-        // Your animation code file - with gsap.js passed as a dependency
-        wp_enqueue_script( 'gsap-js2', get_template_directory_uri() . '/js/app.js', array('gsap-js'), false, true );
-
-    }   
-    add_action("wp_enqueue_scripts", "theme_scripts");
-
+        wp_enqueue_script('gsap-js',
+        'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js',
+        [], '3.13.0', true);
+    
+      // Plugins (alla är gratis i 3.13)
+      wp_enqueue_script('gsap-draggable',
+        'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Draggable.min.js',
+        ['gsap-js'], '3.13.0', true);
+    
+      wp_enqueue_script('gsap-inertia',
+        'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js',
+        ['gsap-js'], '3.13.0', true);
+    
+      wp_enqueue_script('gsap-scramble',
+        'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js',
+        ['gsap-js'], '3.13.0', true);
+    
+      // ditt app.js – beroende på pluginsen:
+      $app_path = get_stylesheet_directory() . '/js/app.js';
+      wp_enqueue_script('gsap-app',
+        get_stylesheet_directory_uri() . '/js/app.js',
+        ['gsap-js','gsap-draggable','gsap-inertia','gsap-scramble'],
+        filemtime($app_path), true);
+    }
+    add_action('wp_enqueue_scripts', 'theme_scripts', 50);
 
 
 

@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    const onOmMigPage = window.location.pathname.includes("om-mig");
     const omBtn = document.getElementById('om-mig-btn');
-    if(window.location.pathname.includes("om-mig")) {
+    if(onOmMigPage && omBtn) {
       omBtn.classList.toggle("activePage");
-      
+
       const omMigParEl = document.querySelector('.omMigSpcWordP');
       const omMigWordArr = omMigParEl.textContent.split(' ');
       omMigParEl.textContent = '';
@@ -182,5 +183,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-    
 })

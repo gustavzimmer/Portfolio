@@ -10,7 +10,7 @@
 
                 <div class="omMigText"><p>Jag gillar att hålla saker enkla, tydliga och användbara</p></div>
                 <div>
-                    <p class="omMigSpcWordP">React · TypeScript · PHP · SQL</p>
+                    <p id="omMigSpcWordP" class="omMigSpcWordP">React · TypeScript · PHP · SQL</p>
                 </div>
         </section>
 

@@ -1,9 +1,24 @@
 document.addEventListener("DOMContentLoaded", function(event){
-
-    console.log("DOM loaded");
    
     //wait until images, links, fonts, stylesheets, and js is loaded
     window.addEventListener("load", function(e){
+      
+      gsap.registerPlugin(Draggable, InertiaPlugin, ScrambleTextPlugin);
+
+      const MoonEl = document.querySelector('.moon-wrapper');
+      if (!MoonEl) return;
+    
+      // Scale-in på load
+      gsap.set(MoonEl, { scale: 0.2, transformOrigin: '50% 50%' });
+      gsap.to(MoonEl, { scale: 1, duration: 0.6, ease: 'power3.out', delay: 0.05 });
+    
+      // Draggable
+      gsap.registerPlugin(Draggable);
+      Draggable.create(MoonEl, {
+        bounds: window,
+        inertia: true,
+      });
+
 
       // Om mig section animation
       if(window.location.pathname.includes("om-mig")) {
@@ -126,26 +141,11 @@ document.addEventListener("DOMContentLoaded", function(event){
         duration: 1.4,
         scrambleText: {
           text: H2_TEXT,
-          chars: 'upperAndLowerCase',
+          chars: 'XO',
           speed: 0.7,
-          tweenLength: true
+          tweenLength: true,
         }
       }, '>-0.15');
-
-      const MoonEl = document.querySelector('.moon-wrapper');
-      if (!MoonEl) return;
-    
-      // Scale-in på load
-      gsap.set(MoonEl, { scale: 0.2, transformOrigin: '50% 50%' });
-      gsap.to(MoonEl, { scale: 1, duration: 0.6, ease: 'power3.out', delay: 0.05 });
-    
-      // Draggable
-      gsap.registerPlugin(Draggable);
-      Draggable.create(MoonEl, {
-        bounds: window,
-        inertia: true,
-      });
-
 
      }, false);
    
