@@ -206,20 +206,53 @@ main {
   }
   
 
-.bg-stars {
+  .bg-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-stars::before,
+.bg-stars::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: url('../images/stars.svg') repeat;
+  background-size: 375px 812px;
+  animation: moveStars 100s linear infinite;
+  will-change: transform;
+}
+
+.bg-stars::before {
+  animation-duration: 110s;
+}
+
+.bg-stars::after {
+  transform: rotate(18deg) scale(1.25);
+  opacity: 0.45;
+  animation-name: moveStarsSlow;
+  animation-duration: 180s;
+}
+
+@keyframes moveStars { from { transform: translate3d(0,0,0); } to { transform: translate3d(-375px,0,0); } }
+@keyframes moveStarsSlow { from { transform: translate3d(0,0,0) rotate(18deg) scale(1.25); } to { transform: translate3d(-520px,-200px,0) rotate(18deg) scale(1.25); } }
+
+
+/* .bg-stars {
     z-index: 0;
     position: fixed;
     inset: 0;
     background: url('../images/stars.svg');
     background-repeat: repeat repeat;
     background-size: 375px 812px;
-    animation: moveStars 100s linear infinite;
+    animation: moveStars 10s linear infinite;
 }
 
 @keyframes moveStars {
   0% { background-position: 0 0; }
   100% { background-position: -375px 0 }
-}
+} */
 
 .forest-wrapper {
   position: fixed;
@@ -314,6 +347,28 @@ main {
   z-index: 2;
 }
 
+.meny-button{
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 4rem);
+}
+
+.meny-button:focus-visible{
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.meny-label{
+  display: inline-block;
+}
+
 .meny #menyBtn {
     animation: floatMeny 5s ease-in-out infinite;
 }
@@ -332,7 +387,7 @@ main {
   animation-play-state: paused;
 }
 
-.meny h3:hover {
+.meny button:hover {
     cursor: pointer;
 }
 
@@ -351,10 +406,21 @@ main {
   
   .nav-panel .nav {
     display: grid;
-    gap: 1rem;
+    gap: 0;
     color: #F5F5F5;
     transform: translateY(10px);
     transition: transform 400ms ease 200ms;
+  }
+
+  .nav__list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav__list li{
+    max-height: 45px;
+    list-style: none;
   }
 
   .nav-links{
@@ -370,7 +436,7 @@ main {
     cursor: pointer;
   }
 
-  .nav-open .meny h3 {
+  .nav-open .meny #menyBtn {
     animation-play-state: paused;
   }
   
@@ -452,7 +518,7 @@ main {
     .nav-panel .nav {
         display: flex;
         align-items: end;
-        gap: 3rem;
+        gap: 2rem;
         transform: translateY(0);
     }
 
@@ -462,6 +528,7 @@ main {
 
     .nav-panel .nav-links {
         display: flex;
+        align-self: center;
         gap: 1rem;
     }
   }

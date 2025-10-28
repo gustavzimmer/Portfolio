@@ -5,6 +5,28 @@
         wp_dequeue_script('gsap-scrolltrigger');
         wp_deregister_script('gsap-scrolltrigger');
     }, 5);
+
+    add_action('after_setup_theme', function () {
+        register_nav_menus(array(
+            'footer_navigation' => __('Footer navigation', 'portfolio'),
+        ));
+    });
+
+    function portfolio_footer_menu_fallback() {
+        echo '<ul class="nav nav__list">';
+        echo '<li class="menu-item"><a class="nav-hover-effekt" href="/om-mig">' . esc_html__('Om mig', 'portfolio') . '</a></li>';
+        echo '<li class="menu-item"><a class="nav-hover-effekt" href="/projekt">' . esc_html__('Projekt', 'portfolio') . '</a></li>';
+        echo '<li class="menu-item"><a class="nav-hover-effekt" href="/kontakt">' . esc_html__('Kontakt', 'portfolio') . '</a></li>';
+        echo '</ul>';
+    }
+
+    add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+        if (isset($args->theme_location) && 'footer_navigation' === $args->theme_location) {
+            $existing = isset($atts['class']) ? $atts['class'] . ' ' : '';
+            $atts['class'] = $existing . 'nav-hover-effekt';
+        }
+        return $atts;
+    }, 10, 3);
     
     function theme_scripts() {
 
@@ -56,8 +78,5 @@
         filemtime($app_path), true);
     }
     add_action('wp_enqueue_scripts', 'theme_scripts', 50);
-
-
-
 
 

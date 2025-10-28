@@ -8,17 +8,21 @@
     <nav class="navSec" >
         
         <div class="meny contain">
-                <button>
-                    <h3 id="menyBtn" class="" aria-expanded="false" aria-controls="navPanel">Meny</h3>
+                <button id="menyBtn" class="meny-button" type="button" aria-expanded="false" aria-controls="navPanel">
+                    <span class="meny-label">Meny</span>
                 </button>
         </div>
                 <div id="navPanel" class="nav-panel" role="dialog" aria-modal="true" aria-labelledby="menyBtn">
                     <div class="nav-panel-inner-con contain mx-auto">
-                        <div class="nav">
-                            <a aria-label="Om mig" id="om-mig-btn" href="/om-mig" class="nav-hover-effekt">Om mig</a>
-                            <a aria-label="Projekt" id="projektBtn" href="/projekt" class="nav-hover-effekt">Projekt</a>
-                            <a aria-label="Kontakt" id="kontaktBtn" href="/kontakt" class="nav-hover-effekt">Kontakt</a>
-                        </div>
+                        <?php
+                            wp_nav_menu(array(
+                                'theme_location' => 'footer_navigation',
+                                'container'      => false,
+                                'menu_class'     => 'nav nav__list',
+                                'fallback_cb'    => 'portfolio_footer_menu_fallback',
+                                'depth'          => 1,
+                            ));
+                        ?>
                         <div class="nav-links">
                             <a href="https://github.com/gustavzimmer" target="_blank" class="icon-hover-effekt">
                                 <span aria-label="Github ikon">

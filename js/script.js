@@ -10,52 +10,72 @@ document.documentElement.classList.add('preloading');
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const btn = document.getElementById('menyBtn');
     const root = document.documentElement;
-  
-    btn.addEventListener('click', () => {
+    const btn = document.getElementById('menyBtn');
+    const navPanel = document.getElementById('navPanel');
+
+    if (btn) {
+      btn.addEventListener('click', () => {
         const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!isOpen));
-        root.classList.toggle('nav-open');
-    });
+        const nextState = !isOpen;
+        btn.setAttribute('aria-expanded', String(nextState));
+        root.classList.toggle('nav-open', nextState);
+        if (navPanel) {
+          navPanel.toggleAttribute('data-open', nextState);
+        }
+      });
 
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 1024 && root.classList.contains('nav-open')) {
+          root.classList.remove('nav-open');
+          btn.setAttribute('aria-expanded', 'false');
+          if (navPanel) {
+            navPanel.removeAttribute('data-open');
+          }
+        }
+      });
+    }
 
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1024 && root.classList.contains('nav-open')) {
-        root.classList.remove('nav-open');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-    });
+    const navLinks = Array.from(document.querySelectorAll('.nav__list a'));
+    const normalisePath = (value = '') => value.replace(/\/+$/, '');
+    const findNavLink = (slug) => {
+      const target = `/${slug}`;
+      return navLinks.find((anchor) => normalisePath(anchor.pathname).endsWith(target));
+    };
 
     const onOmMigPage = window.location.pathname.includes("om-mig");
-    const omBtn = document.getElementById('om-mig-btn');
-    if(onOmMigPage && omBtn) {
-      omBtn.classList.toggle("activePage");
-
+    const omLink = findNavLink('om-mig');
+    if(onOmMigPage && omLink) {
+      omLink.classList.add('activePage');
       const omMigParEl = document.querySelector('.omMigSpcWordP');
-      const omMigWordArr = omMigParEl.textContent.split(' ');
-      omMigParEl.textContent = '';
-      omMigWordArr.forEach((word) => {
-        const span = document.createElement('span');
-        span.classList.add('om-mig-spcWord');
-  
-        if(word === '·') {
-          span.classList.add('dot-word');
-        }
-        
-        span.textContent = word + ' ';
-        omMigParEl.appendChild(span);
-      })
+      if (omMigParEl) {
+        const omMigWordArr = omMigParEl.textContent.split(' ');
+        omMigParEl.textContent = '';
+        omMigWordArr.forEach((word) => {
+          const span = document.createElement('span');
+          span.classList.add('om-mig-spcWord');
+    
+          if(word === '·') {
+            span.classList.add('dot-word');
+          }
+          
+          span.textContent = word + ' ';
+          omMigParEl.appendChild(span);
+        });
+      }
     }
-    const projektBtn = document.getElementById('projektBtn');
-    const projektMoonEl = document.querySelector('.moon-wrapper');
     if(window.location.pathname.includes("projekt")) {
-      projektBtn.classList.toggle("activePage");
+      const projektLink = findNavLink('projekt');
+      if (projektLink) {
+        projektLink.classList.add("activePage");
+      }
       document.documentElement.classList.add("projektPage");
     }
-    const kontaktBtn = document.getElementById('kontaktBtn');
     if(window.location.pathname.includes("kontakt")) {
-      kontaktBtn.classList.toggle("activePage");
+      const kontaktLink = findNavLink('kontakt');
+      if(kontaktLink) {
+        kontaktLink.classList.add("activePage");
+      }
     }
 
     /* Squeeze hover effect */
